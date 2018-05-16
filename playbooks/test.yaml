@@ -1,10 +1,13 @@
 ---
+    - hosts: all
+      user: ubuntu
 
-- name: ensure file exists
-  copy:
-    content: ""
-    dest: /tmp/test_file
-    force: no
-    group: ubuntu
-    owner: ubuntu
-    mode: 0660
+      tasks:
+      - name: ensure file exists
+        copy:
+          content: ""
+          dest: /tmp/test_file
+          force: no
+          group: ubuntu
+          owner: ubuntu
+          mode: 0660
