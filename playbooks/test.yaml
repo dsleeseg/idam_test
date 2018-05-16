@@ -1,1 +1,10 @@
+---
 
+- name: ensure file exists
+  copy:
+    content: ""
+    dest: /tmp/test_file
+    force: no
+    group: ubuntu
+    owner: ubuntu
+    mode: 0660
