@@ -4,5 +4,5 @@
 
       tasks:
       - name: ensure file exists
-        s3: bucket=adobedam-ansible-poc object=/test.txt src=/tmp/test.txt mode=put
+        aws_s3: bucket=adobedam-ansible-poc object=/test.txt src=/tmp/test.txt mode=put
          
