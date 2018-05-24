@@ -1,7 +1,8 @@
 ---
-    - hosts: all
+    - hosts: tag_Name_DAMPOCAuthor
       user: ubuntu
 
       tasks:
       - name: ensure file exists
+        s3: bucket=adobedam-ansible-poc object=/test.txt src=/tmp/test.txt mode=put
          
