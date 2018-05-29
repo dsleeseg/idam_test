@@ -1,0 +1,23 @@
+---
+    - hosts: tag_Name_DAMPOCAuthor
+      user: ubuntu
+
+      tasks:
+      - name: Start AEM service
+        service:
+          name: "{{ aem_service }}"
+          state: started
+
+      - name: Check startup log
+        shell:
+          touch {{ aem_home_directory }}\logs\startup.log
+          if cat {{ aem_home_directory }}\logs\startup.log | grep 'stuf'; then
+            echo 'True'
+          else
+            echo 'False'
+          fi
+
+        register: get_content
+        until: get_content.stdout_lines == ['True']
+        retries: 30
+        delay: 10
