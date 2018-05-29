@@ -1,6 +1,7 @@
 ---
     - hosts: tag_Name_DAMPOCAuthor
       user: ubuntu
+      become: true
 
       tasks:
       - name: List s3 objects
