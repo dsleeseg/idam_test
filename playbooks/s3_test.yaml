@@ -4,5 +4,5 @@
 
       tasks:
       - name: ensure file exists
-        aws_s3: bucket=adobedam-ansible-poc object=/adam_ci_cd/author/*.zip dest=/tmp/author mode=get aws_access_key="{{aws_key}}" aws_secret_key="{{aws_secret}}"
+        aws_s3: bucket=adobedam-ansible-poc object=/adam_ci_cd/author dest=/tmp/author mode=get aws_access_key="{{aws_key}}" aws_secret_key="{{aws_secret}}"
          
