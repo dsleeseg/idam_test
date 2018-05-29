@@ -3,6 +3,21 @@
       user: ubuntu
 
       tasks:
-      - name: ensure file exists
-        aws_s3: bucket=adobedam-ansible-poc object=/adam_ci_cd/author/utils-1.2.30.zip dest=/tmp/ mode=get aws_access_key="{{aws_key}}" aws_secret_key="{{aws_secret}}"
-         
+      - name: List s3 objects
+        aws_s3:
+          bucket: "adobedam-ansible-poc"
+          prefix: "adam_ci_cd/author/"
+          mode: list
+          aws_access_key="{{aws_key}}"
+          aws_secret_key="{{aws_secret}}"
+        register: s3objects
+
+      - name: Download s3objects
+        aws_s3:
+          bucket: "adobedam-ansible-poc"
+          object: "{{ item }}"
+          mode: get
+          dest: "/tmp/{{ item|basename }}"
+          aws_access_key="{{aws_key}}"
+          aws_secret_key="{{aws_secret}}"
+        with_items: "{{ s3objects.s3_keys }}"
