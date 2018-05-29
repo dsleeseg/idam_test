@@ -8,8 +8,8 @@
           bucket: "adobedam-ansible-poc"
           prefix: "adam_ci_cd/author/"
           mode: list
-          aws_access_key="{{aws_key}}"
-          aws_secret_key="{{aws_secret}}"
+          aws_access_key:"{{aws_key}}"
+          aws_secret_key:"{{aws_secret}}"
         register: s3objects
 
       - name: Download s3objects
@@ -18,6 +18,6 @@
           object: "{{ item }}"
           mode: get
           dest: "/tmp/{{ item|basename }}"
-          aws_access_key="{{aws_key}}"
-          aws_secret_key="{{aws_secret}}"
+          aws_access_key:"{{aws_key}}"
+          aws_secret_key:"{{aws_secret}}"
         with_items: "{{ s3objects.s3_keys }}"
