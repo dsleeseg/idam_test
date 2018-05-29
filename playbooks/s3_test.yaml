@@ -18,8 +18,9 @@
           bucket: "adobedam-ansible-poc"
           object: "{{ item }}"
           mode: get
-          dest: /tmp/
+          dest: "/tmp/{{ item|basename }}"
           aws_access_key: "{{aws_key}}"
           aws_secret_key: "{{aws_secret}}"
           overwrite: always
         with_items: "{{ s3objects.s3_keys }}"
+        when: not item|basename == ""
