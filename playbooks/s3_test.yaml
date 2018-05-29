@@ -6,7 +6,7 @@
       - name: List s3 objects
         aws_s3:
           bucket: "adobedam-ansible-poc"
-          prefix: "adam_ci_cd/author/"
+          prefix: "adam_ci_cd/publisher/"
           mode: list
           aws_access_key: "{{aws_key}}"
           aws_secret_key: "{{aws_secret}}"
