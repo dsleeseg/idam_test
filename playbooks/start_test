@@ -10,8 +10,8 @@
 
       - name: Check startup log
         shell:
-          touch {{ aem_home_directory }}\crx-quickstart\logs\startup.log
-          if cat {{ aem_home_directory }}\crx-quickstart\logs\startup.log | grep 'Quickstart started'; then
+          touch {{ aem_home_directory }}/crx-quickstart/logs/startup.log
+          if cat {{ aem_home_directory }}/crx-quickstart/logs/startup.log | grep 'Quickstart started'; then
             echo 'True'
           else
             echo 'False'
