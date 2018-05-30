@@ -14,6 +14,7 @@
           if cat {{ aem_home_directory }}/crx-quickstart/logs/startup.log | grep 'Quickstart started'; then
             echo 'True'
           else
+            tail {{ aem_home_directory }}/crx-quickstart/logs/startup.log
             echo 'False'
           fi
 
