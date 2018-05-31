@@ -5,6 +5,5 @@
       tasks:
       - name: debug ps
         shell:
-          ps -aux | grep 'aem' && 
-          ls /etc/init.d
+          ps -aux | grep java | grep -v grep | grep 'adobe-aem6.1'
         register: cmdline
