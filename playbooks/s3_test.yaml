@@ -1,5 +1,5 @@
 ---
-    - hosts: tag_Name_DAMPOCAuthor
+    - hosts: tag_Name_DAMPOCAuthor tag_Name_DAMPOCAuthor_ISG
       user: ubuntu
       become: true
 
