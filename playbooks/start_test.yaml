@@ -10,9 +10,9 @@
 
       - name: Check startup log
         shell:
-          cat {{ aem_home_directory }}/crx-quickstart/logs/startup.log | grep 'Quickstart started'
+          cat {{ aem_home_directory }}/crx-quickstart/logs/startup.log | grep 'Quikstart started'
         register: cmdline
         failed_when: "cmdline.rc != 0"
-        until: cmdline.rc != 0
+        until: cmdline.rc == 0
         retries: 12
         delay: 10
