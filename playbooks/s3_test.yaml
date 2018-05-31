@@ -12,7 +12,6 @@
           aws_access_key: "{{aws_key}}"
           aws_secret_key: "{{aws_secret}}"
         register: s3objects
-        when: "'.zip' in s3objects"
 
       - name: Download s3objects
         aws_s3:
@@ -24,4 +23,4 @@
           aws_secret_key: "{{aws_secret}}"
           overwrite: always
         with_items: "{{ s3objects.s3_keys }}"
-        when: not item|basename == ""
+        when: not item|basename == "" and '.zip' in item|basename
