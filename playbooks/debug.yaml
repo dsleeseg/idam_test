@@ -6,4 +6,7 @@
       - name: debug ps
         shell:
           ps -aux | grep 'aem'
+          service --status-all
+          ls /etc/init.d
+          systemctl -r --type service --all
         register: cmdline
