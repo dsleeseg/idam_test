@@ -7,11 +7,12 @@
       - name: List s3 objects
         aws_s3:
           bucket: "adobedam-ansible-poc"
-          prefix: "adam_ci_cd/publisher/"
+          prefix: "adam_ci_cd/author/"
           mode: list
           aws_access_key: "{{aws_key}}"
           aws_secret_key: "{{aws_secret}}"
         register: s3objects
+        when: "'.zip' in item|basename"
 
       - name: Download s3objects
         aws_s3:
