@@ -6,5 +6,5 @@
       - name: debug ps
         shell:
           ps -aux | grep 'aem' && 
-          ls /etc/init.d && 
+          ls /etc/init.d
         register: cmdline
