@@ -12,7 +12,7 @@
           aws_access_key: "{{aws_key}}"
           aws_secret_key: "{{aws_secret}}"
         register: s3objects
-        when: "'.zip' in item|basename"
+        when: "'.zip' in s3objects"
 
       - name: Download s3objects
         aws_s3:
