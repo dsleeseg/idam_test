@@ -10,13 +10,9 @@
 
       - name: Check startup log
         shell:
-          if cat {{ aem_home_directory }}/crx-quickstart/logs/startup.log | grep 'Quickstart started'; then
-            echo 'True'
-          else
-            echo 'False'
-          fi
-
-        register: get_content
-        until: get_content.stdout_lines == ['True']
-        retries: 30
+          cat {{ aem_home_directory }}/crx-quickstart/logs/startup.log | grep 'Quickstart started'
+        register: cmdline
+        failed_when: "cmdline.rc != 0"
+        until: cmdline.rc != 0
+        retries: 12
         delay: 10
