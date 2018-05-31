@@ -4,16 +4,17 @@
 
       tasks:
       - name: Stop AEM service
-        service:
-          name: "{{ aem_service }}"
-          state: stopped
+        shell:
+          sudo service aem61-author stop
+        register: cmdline
+        become: true
 
       - name: Check process
         shell:
-          ps -aux | grep '{{ aem_service }}'
+          ps -aux | grep java | grep 'adobe-aem6.1'
         register: cmdline
         failed_when: "cmdline.rc != 1"
         until: cmdline.rc == 1
         retries: 12
         delay: 10
-        become: true
+        
