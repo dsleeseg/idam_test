@@ -12,7 +12,7 @@
         shell:
           ps -aux | grep '{{ aem_service }}'
         register: cmdline
-        failed_when: "cmdline.rc != 0"
-        until: cmdline.rc == 0
+        failed_when: "cmdline.rc != 1"
+        until: cmdline.rc == 1
         retries: 12
         delay: 10
