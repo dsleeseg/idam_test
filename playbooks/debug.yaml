@@ -1,0 +1,9 @@
+---
+    - hosts: tag_Name_DAMPOCAuthor
+      user: ubuntu
+
+      tasks:
+      - name: debug ps
+        shell:
+          ps -aux | grep 'aem'
+        register: cmdline
