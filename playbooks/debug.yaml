@@ -10,5 +10,5 @@
 
       - name: debug host ping
         shell:
-          ping 172.16.0.120
+          ping -w 2 localhost
         register: cmd2
