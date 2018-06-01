@@ -24,5 +24,3 @@
           overwrite: always
         with_items: "{{ s3objects.s3_keys }}"
         when: not item|basename == "" and '.zip' in item|basename
-        set_fact: 
-           s3_file_list: not item|basename == "" and '.zip' in item|basename
