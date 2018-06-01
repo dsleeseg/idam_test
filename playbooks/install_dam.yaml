@@ -14,7 +14,7 @@
       - name: Install Packages
         shell: 
            #cd /tmp/code_deploy && echo {{ package_admin_url }} {{ item }}
-           cd /tmp/code_deploy && curl -u "{{ aem_api_user }}:{{ aem_api_password }}" -X POST --proxy http://proxy-us.intel.com:911 -F force=true -F install=true -F file={{ item }} {{ package_admin_url }}
+           cd /tmp/code_deploy && curl -u "{{ aem_api_user }}:{{ aem_api_password }}" -X POST -F force=true -F install=true -F file={{ item }} {{ package_admin_url }}
         with_items: "{{ files.stdout_lines }}"
         register: result
       - debug: var=result.stdout_lines
