@@ -1,9 +1,15 @@
 ---
-    - hosts: tag_Name_DAMPOCAuthor tag_Name_DAMPOCAuthor_ISG
+#   - hosts: tag_Name_DAMPOCAuthor tag_Name_DAMPOCAuthor_ISG
+    - hosts: tag_Name_DAMPOCAuthor 
       user: ubuntu
       become: true
 
       tasks:
+      - name: Create /tmp/code_deploy
+        shell:
+          mkdir -p /tmp/code_deploy
+        register: cmdline
+      
       - name: List s3 objects
         aws_s3:
           bucket: "adobedam-ansible-poc"
