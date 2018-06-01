@@ -8,9 +8,7 @@
           ps -aux | grep java | grep -v grep | grep 'adobe-aem6.1'
         register: cmd1
 
-      tasks:
       - name: debug host ping
         shell:
           ping 172.16.0.120
         register: cmd2
-
