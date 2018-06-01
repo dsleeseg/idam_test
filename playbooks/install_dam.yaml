@@ -12,6 +12,7 @@
       - debug: var=files.stdout_lines
 
       - name: Print files
-        shell: "echo {{ item }}"
+        shell: 
+           cd /tmp/code_deploy && echo {{ package_admin_url }} {{ item }}
         with_items: "{{ files.stdout_lines }}"
         
