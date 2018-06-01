@@ -1,0 +1,20 @@
+---
+#   - hosts: tag_Name_DAMPOCAuthor tag_Name_DAMPOCAuthor_ISG
+    - hosts: tag_Name_DAMPOCAuthor 
+      user: ubuntu
+      become: true
+
+      tasks:
+      - name: Get Files to deploy
+        shell:
+          ls -1 /tmp/code_deploy/
+        register: file_list
+      - debug: var=file_list.stdout_lines
+      
+      - name: Print files
+        shell:
+          echo {{ item }}
+        loop: {{ file_list }}
+        register: out
+      - debug: var=out.stdout_lines
+      
