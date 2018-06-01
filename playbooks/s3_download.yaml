@@ -30,3 +30,9 @@
           overwrite: always
         with_items: "{{ s3objects.s3_keys }}"
         when: not item|basename == "" and '.zip' in item|basename
+
+      - name: Verify files
+        shell:
+          ls -ltr /tmp/code_deploy
+        register: verify
+      - debug: var=verify.stdout_lines
