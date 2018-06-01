@@ -12,10 +12,10 @@
       - name: debug host
         shell:
           nslookup devauthor1.assets.infra-host.com
-        register: cmd1
+        register: cmd2
 
       tasks:
       - name: debug host ping
         shell:
           ping devauthor1.assets.infra-host.com
-        register: cmd1
+        register: cmd3
