@@ -1,0 +1,4 @@
+ - hosts: tag_Name_DAMPOCAuthor_ISG
+  tasks
+ - pip:
+      name: boto3
