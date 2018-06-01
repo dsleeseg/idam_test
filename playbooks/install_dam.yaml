@@ -14,7 +14,7 @@
       - name: Print files
         shell:
           echo {{ item }}
-        loop: {{ file_list }}
+        with_items: "{{ file_list }}"
         register: out
       - debug: var=out.stdout_lines
       
