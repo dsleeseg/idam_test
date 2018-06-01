@@ -8,13 +8,10 @@
       - name: Get Files to deploy
         shell:
           ls -1 /tmp/code_deploy/
-        register: file_list
-      - debug: var=file_list.stdout_lines
-      
+        register: files
+      - debug: var=files.stdout_lines
+
       - name: Print files
-        shell:
-          echo {{ item }}
-        with_items: "{{ file_list }}"
-        register: out
-      - debug: var=out.stdout_lines
-      
+        shell: "echo {{ item }}"
+        with_items: "{{ files.results|map(attribute='stdout_lines')|list }}"
+        
