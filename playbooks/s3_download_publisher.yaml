@@ -1,0 +1,37 @@
+---
+    - hosts: tag_Name_DAMPOCPublish tag_Name_DAMPOCPublish_ISG
+      user: ubuntu
+      become: true
+
+      tasks:
+      - name: Create /tmp/code_deploy
+        shell:
+          mkdir -p /tmp/code_deploy
+        register: cmdline
+      
+      - name: List s3 objects
+        aws_s3:
+          bucket: "adobedam-ansible-poc"
+          prefix: "adam_ci_cd/publisher/"
+          mode: list
+          aws_access_key: "{{aws_key}}"
+          aws_secret_key: "{{aws_secret}}"
+        register: s3objects
+
+      - name: Download s3objects
+        aws_s3:
+          bucket: "adobedam-ansible-poc"
+          object: "{{ item }}"
+          mode: get
+          dest: "/tmp/code_deploy/{{ item|basename }}"
+          aws_access_key: "{{aws_key}}"
+          aws_secret_key: "{{aws_secret}}"
+          overwrite: always
+        with_items: "{{ s3objects.s3_keys }}"
+        when: not item|basename == "" and '.zip' in item|basename
+
+      - name: Verify files
+        shell:
+          ls -ltr /tmp/code_deploy
+        register: verify
+      - debug: var=verify.stdout_lines
