@@ -1,9 +1,9 @@
 ---
-    - hosts: tag_Name_DAMPOCAuthor
+    - hosts: tag_Name_DAMPOCAuthor tag_Name_DAMPOCAuthor_ISG tag_Name_DAMPOCPublish tag_Name_DAMPOCPublish_ISG
       user: ubuntu
 
       tasks:
-      - name: Stop AEM service
+      - name: Start AEM service
         shell:
           sudo service aem61-author start
         register: cmdline
@@ -15,5 +15,5 @@
         register: cmdline
         failed_when: "cmdline.rc != 0"
         until: cmdline.rc == 0
-        retries: 20
-        delay: 15
+        retries: 100
+        delay: 10
