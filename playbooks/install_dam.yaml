@@ -13,7 +13,7 @@
 
       - name: Install Packages
         shell: 
-           cd /tmp/code_deploy && curl -u "{{ aem_api_user }}:{{ aem_api_password }}" -F force=true -F install=true -F file=@"{{ item }}" 'http://localhost:4502/crx/packmgr/service.jsp'
+           cd /tmp/code_deploy && curl --fail -u "{{ aem_api_user }}:{{ aem_api_password }}" -F force=true -F install=true -F file=@"{{ item }}" 'http://localhost:4502/crx/packmgr/service.jsp' | tail -4 | grep 'code="200"'
         with_items: "{{ files.stdout_lines }}"
         register: result
       - debug: var=result.stdout_lines
