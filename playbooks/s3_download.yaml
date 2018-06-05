@@ -4,9 +4,9 @@
       become: true
 
       tasks:
-      - name: Create /tmp/code_deploy
+      - name: Delete and Create /tmp/code_deploy
         shell:
-          mkdir -p /tmp/code_deploy
+          rm -rf /tmp/code_deploy && mkdir -p /tmp/code_deploy
         register: cmdline
       
       - name: List s3 objects
