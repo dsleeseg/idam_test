@@ -1,0 +1,87 @@
+---
+    - hosts: tag_Name_DAMPOCPublish tag_Name_DAMPOCPublish_ISG
+      user: ubuntu
+      become: true
+
+      tasks:
+      - name: "S3 --> Delete and Create /tmp/code_deploy"
+        shell:
+          rm -rf /tmp/code_deploy && mkdir -p /tmp/code_deploy
+        register: cmdline
+      
+      - name: "S3 --> List s3 objects"
+        aws_s3:
+          bucket: "adobedam-ansible-poc"
+          prefix: "adam_ci_cd/publisher/"
+          mode: list
+          aws_access_key: "{{aws_key}}"
+          aws_secret_key: "{{aws_secret}}"
+        register: s3objects
+
+      - name: "S3 --> Download s3objects"
+        aws_s3:
+          bucket: "adobedam-ansible-poc"
+          object: "{{ item }}"
+          mode: get
+          dest: "/tmp/code_deploy/{{ item|basename }}"
+          aws_access_key: "{{aws_key}}"
+          aws_secret_key: "{{aws_secret}}"
+          overwrite: always
+        with_items: "{{ s3objects.s3_keys }}"
+        when: not item|basename == "" and '.zip' in item|basename
+
+      - name: "S3 --> Verify files"
+        shell:
+          ls -ltr /tmp/code_deploy
+        register: verify
+      - debug: var=verify.stdout_lines
+      
+      
+
+      - name: "INSTALL --> Get Files to deploy"
+        shell:
+          ls -1 /tmp/code_deploy/
+        register: files
+      - debug: var=files.stdout_lines
+
+      - name: "INSTALL --> Install Packages"
+        shell: 
+           cd /tmp/code_deploy && curl --fail -u "{{ aem_api_user }}:{{ aem_api_password }}" -F force=true -F install=true -F file=@"{{ item }}" 'http://localhost:4503/crx/packmgr/service.jsp' | tail -4 | grep 'code="200"'
+        with_items: "{{ files.stdout_lines }}"
+        register: result
+      - debug: var=result.stdout_lines
+      
+      
+      
+      - name: "STOP --> Stop AEM service"
+        shell:
+          sudo service aem61-publish stop
+        register: cmdline
+        become: true
+
+      - name: "STOP --> Check process"
+        shell:
+          ps -aux | grep java | grep -v grep | grep 'adobe-aem6.1'
+        register: cmdline
+        failed_when: "cmdline.rc != 1"
+        until: cmdline.rc == 1
+        retries: 12
+        delay: 10
+                
+        
+        
+      - name: "START --> Start AEM service"
+        shell:
+          sudo service aem61-publish start
+        register: cmdline
+        become: true
+
+      - name: "START --> Check startup log"
+        shell:
+          cat {{ aem_home_directory }}/crx-quickstart/logs/startup.log | grep 'Quickstart started'
+        register: cmdline
+        failed_when: "cmdline.rc != 0"
+        until: cmdline.rc == 0
+        retries: 20
+        delay: 15
+      
