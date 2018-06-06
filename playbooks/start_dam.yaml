@@ -1,11 +1,11 @@
 ---
-    - hosts: tag_Name_DAMPOCAuthor tag_Name_DAMPOCAuthor_ISG tag_Name_DAMPOCPublish tag_Name_DAMPOCPublish_ISG
+    - hosts: tag_Name_DAMPOCPublish tag_Name_DAMPOCPublish_ISG
       user: ubuntu
 
       tasks:
       - name: Start AEM service
         shell:
-          sudo service aem61-author start
+          sudo service aem61-publish start
         register: cmdline
         become: true
 
