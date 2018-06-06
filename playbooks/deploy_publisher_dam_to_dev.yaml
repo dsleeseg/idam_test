@@ -65,7 +65,7 @@
         register: cmdline
         failed_when: "cmdline.rc != 1"
         until: cmdline.rc == 1
-        retries: 100
+        retries: 6
         delay: 10
                 
         
@@ -82,6 +82,6 @@
         register: cmdline
         failed_when: "cmdline.rc != 0"
         until: cmdline.rc == 0
-        retries: 100
-        delay: 10
+        retries: 10
+        delay: 30
       
